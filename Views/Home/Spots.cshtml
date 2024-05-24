@@ -76,11 +76,11 @@
         }
 
 
-        const loadSpots = async () => {    
-            const url = 'https://localhost:7045/api/Spots';
+        const loadSpots = async () => {
+            const url = 'https://localhost:7045/api/Spots'; //後端伺服器的 API 端點網址
             const response = await fetch(url, {
                 method: 'POST',
-                body: JSON.stringify(searchData),
+                body: JSON.stringify(searchData),//將要傳送給後端伺服器的資料 searchData 轉換為 JSON 字串格式
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -146,7 +146,6 @@
             ulCategories.innerHTML = categorys.join("");
 
         }
-
 
         loadSpots();
 
