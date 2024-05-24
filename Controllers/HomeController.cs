@@ -14,6 +14,10 @@ namespace MSIT158Site.Controllers
             _logger = logger;
             _context = context;
         }
+        public IActionResult CallApi()
+        {
+            return View();
+        }
 
         public IActionResult Index()
         {
@@ -48,6 +52,10 @@ namespace MSIT158Site.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
         public IActionResult Spots()
+        {
+            return View();
+        }
+        public IActionResult CheckAccount()
         {
             return View();
         }

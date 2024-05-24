@@ -50,11 +50,11 @@ namespace MSIT158Site.Controllers
             return Json(roads);
         }
 
-        //檢查帳號是否存在
+        //檢查帳號是否存在 
+        [HttpPost]
         public IActionResult CheckAccount(string name)
         {
             var member = _context.Members.Any(m => m.Name == name);
-
             return Content(member.ToString(), "text/plain", System.Text.Encoding.UTF8);
         }
 
@@ -118,6 +118,7 @@ namespace MSIT158Site.Controllers
             return Content(info, "text/plain", System.Text.Encoding.UTF8);
             // return Content($"Hello {member.Name}，{member.Age} 歲了，電子郵件是 {member.Email}", "text/html", System.Text.Encoding.UTF8);
         }
+
         [HttpPost]
         public IActionResult Spots([FromBody] SearchDTO searchDTO)
         {
@@ -130,8 +131,19 @@ namespace MSIT158Site.Controllers
                 spots = spots.Where(s => s.SpotTitle.Contains(searchDTO.keyword) || s.SpotDescription.Contains(searchDTO.keyword));
             }
 
-
-
+            //排序
+            switch (searchDTO.sortBy)
+            {
+                case "spotTitle":
+                    spots = searchDTO.sortType == "asc" ? spots.OrderBy(s => s.SpotTitle) : spots.OrderByDescending(s => s.SpotTitle);
+                    break;
+                case "categoryId":
+                    spots = searchDTO.sortType == "asc" ? spots.OrderBy(s => s.CategoryId) : spots.OrderByDescending(s => s.CategoryId);
+                    break;
+                default:
+                    spots = searchDTO.sortType == "asc" ? spots.OrderBy(s => s.SpotId) : spots.OrderByDescending(s => s.SpotId);
+                    break;
+            }
 
             //總共有多少筆資料
             int totalCount = spots.Count();
@@ -154,10 +166,10 @@ namespace MSIT158Site.Controllers
             spotsPaging.SpotsResult = spots.ToList();
 
 
-            //return Json(search);
             return Json(spotsPaging);
         }
 
-
     }
+
+
 }
