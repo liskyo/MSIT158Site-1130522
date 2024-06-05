@@ -49,6 +49,7 @@
                     abortController.abort();
                 },5000);
 
+
                 const response = await fetch('@Url.Content("~/api/index")', { signal }); //獲取並輸出 response（回應對象）
                 const data = await response.text();  //將 response 轉換成文本（text）形式
                 if (!response.ok) {
